@@ -13,11 +13,28 @@ AS
 BEGIN
 
 	SET NOCOUNT ON;
-    SELECT * FROM  [dbo].[Empleado] WHERE [Activo] = 1 ORDER BY [Nombre];
-	
+    SELECT E.*,P.Nombre AS "NombrePuesto",D.Nombre AS "NombreDepartamento", T.Nombre AS "Documento" FROM  [dbo].[Empleado] E 
+	INNER JOIN [dbo].[Puesto] P ON E.ID_Puesto = P.ID 
+	INNER JOIN [dbo].[Departamento] D ON E.ID_TrabajaEnDepartamento = D.ID 
+	INNER JOIN [dbo].[TipoDocIdentidad] T ON E.ID_Documento = T.ID 
+	WHERE E.Activo = 1 ORDER BY E.Nombre
 	SET NOCOUNT OFF;
 END
 GO
+--CONTAR EMPLEADOS DE UN PUESTO
+ALTER PROCEDURE [dbo].[contEmpleados]
+	@InPuesto int
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+    SELECT COUNT(*) as "Cantidad" FROM  [dbo].[Empleado] WHERE [Activo] = 1 AND [ID_Puesto] =  @InPuesto;
+	SET NOCOUNT OFF;
+END
+GO
+
+
+
 
 --BORRAR PUESTO
 ALTER PROCEDURE [dbo].[DeletePuesto]

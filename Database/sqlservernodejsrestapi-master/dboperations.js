@@ -251,6 +251,23 @@ async function listarEmpleadosFiltro(empleadoFiltro) {
         console.log(error);
     }
 }
+
+//CONTADOR DE EMPLEADOS EN PUESTO
+async function contEmpleados(puestoId) {
+    try {
+        let pool = await sql.connect(config);
+		let list = await pool.request()
+			.input('InPuesto', sql.Int, puestoId)
+            .execute('contEmpleados');
+        return list.recordsets;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 module.exports = {
     getOrders: getOrders,
     getOrder : getOrder,
@@ -269,5 +286,8 @@ module.exports = {
 	insertarEmpleado : insertarEmpleado,
 	editarEmpleado : editarEmpleado,
 	deleteEmpleado : deleteEmpleado,
-	listarEmpleadosFiltro : listarEmpleadosFiltro
+	listarEmpleadosFiltro : listarEmpleadosFiltro,
+	
+	//CONT EMPLEADOS
+	contEmpleados: contEmpleados
 }

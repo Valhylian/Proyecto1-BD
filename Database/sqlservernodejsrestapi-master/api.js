@@ -12,6 +12,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/api', router);
+app.get('/', function(req,res) {
+   res.sendfile('./html/index.html');
+}) 
+app.get('/js/index.js', function(req,res) {
+   res.sendfile('./js/index.js');
+}) 
+app.get('/css/css.css', function(req,res) {
+   res.sendfile('./css/css.css');
+})
 
 
 router.use((request,response,next)=>{
@@ -149,6 +158,16 @@ router.route('/empleadosFiltro').get((request,response)=>{
     dboperations.listarEmpleadosFiltro(empleado).then(result => {
        response.status(201).json(result);
     })
+
+})
+
+//LISTAR EMPLEADOS
+router.route('/contEmpleados/:id').get((request,response)=>{
+
+	dboperations.contEmpleados(request.params.id).then(result => {
+       response.status(201).json(result);
+    })
+
 
 })
 var port = process.env.PORT || 8090;

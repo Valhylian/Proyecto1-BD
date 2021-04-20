@@ -151,11 +151,34 @@ router.route('/empleados/:id').delete((request,response)=>{
 })
 
 //LISTAR EMPLEADOS
-router.route('/empleadosFiltro').get((request,response)=>{
+router.route('/empleadosFiltro/:name').get((request,response)=>{
 
     let empleado = {...request.body}
 	console.log(empleado);
-    dboperations.listarEmpleadosFiltro(empleado).then(result => {
+    dboperations.listarEmpleadosFiltro(request.params.name).then(result => {
+       response.status(201).json(result);
+    })
+
+})
+
+//LISTAR DEPARTAMENTOS
+router.route('/departamentos').get((request,response)=>{
+
+    let departamento = {...request.body}
+	console.log(departamento);
+    dboperations.listarDepartamentos().then(result => {
+       response.status(201).json(result);
+    })
+
+})
+
+
+//LISTAR DOCUMENTOS
+router.route('/documentos').get((request,response)=>{
+
+    let documento = {...request.body}
+	console.log(documento);
+    dboperations.listarDocumentos().then(result => {
        response.status(201).json(result);
     })
 
@@ -167,7 +190,6 @@ router.route('/contEmpleados/:id').get((request,response)=>{
 	dboperations.contEmpleados(request.params.id).then(result => {
        response.status(201).json(result);
     })
-
 
 })
 var port = process.env.PORT || 8090;

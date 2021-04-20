@@ -165,7 +165,7 @@ async function deletePuesto(puestoId) {
     }
 }
 
-//LISTAR PUESTOS///////////////////////////////////////////////////////////////
+//LISTAR EMPLEADOS///////////////////////////////////////////////////////////////
 async function listarEmpleados() {
     try {
         let pool = await sql.connect(config);
@@ -178,6 +178,37 @@ async function listarEmpleados() {
         console.log(error);
     }
 }
+
+//LISTAR DEPARTAMENTOS///////////////////////////////////////////////////////////////
+async function listarDepartamentos() {
+    try {
+        let pool = await sql.connect(config);
+		let list = await pool.request()
+            .execute('ListaDepartamento');
+        return list.recordsets;
+
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+//LISTAR DOCUMENTOS///////////////////////////////////////////////////////////////
+async function listarDocumentos() {
+    try {
+        let pool = await sql.connect(config);
+		let list = await pool.request()
+            .execute('ListaDocumentos');
+        return list.recordsets;
+
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+
+
 
 //INSERTAR EMPLEADOS///////////////////////////////////////////////////////////////
 async function insertarEmpleado(empleado) {
@@ -238,11 +269,11 @@ async function deleteEmpleado(empleadoId) {
 }
 
 //LISTAR EMPLEADOS CON FILTRO
-async function listarEmpleadosFiltro(empleadoFiltro) {
+async function listarEmpleadosFiltro(name) {
     try {
         let pool = await sql.connect(config);
 		let list = await pool.request()
-			.input('InName', sql.NVarChar, empleadoFiltro.nameEmpleado)
+			.input('InName', sql.NVarChar, name)
             .execute('ListaEmpleadosFiltro');
         return list.recordsets;
 
@@ -289,5 +320,9 @@ module.exports = {
 	listarEmpleadosFiltro : listarEmpleadosFiltro,
 	
 	//CONT EMPLEADOS
-	contEmpleados: contEmpleados
+	contEmpleados: contEmpleados,
+	
+	//DEPARTAMENTOS///////////////////////////////////////////////////////////////
+	listarDepartamentos:listarDepartamentos,
+	listarDocumentos:listarDocumentos
 }

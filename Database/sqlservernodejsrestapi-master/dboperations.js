@@ -21,7 +21,7 @@ async function getOrder(orderId) {
             .query("SELECT * from Orders where Id = @input_parameter");
         return product.recordsets;
 
-    }
+    } 
     catch (error) {
         console.log(error);
     }
@@ -297,6 +297,21 @@ async function contEmpleados(puestoId) {
     }
 }
 
+//VALIDAR LOGIN
+async function validarLogin(user, pass) {
+    try {
+        let pool = await sql.connect(config);
+        let product = await pool.request()
+            .input('InUser', sql.NVarChar, user)
+			.input('InPassword', sql.NVarChar, pass)
+            .execute('validarLogin');
+        return product.recordsets;
+
+    } 
+    catch (error) {
+        console.log(error);
+    }
+}
 
 
 module.exports = {
@@ -324,5 +339,8 @@ module.exports = {
 	
 	//DEPARTAMENTOS///////////////////////////////////////////////////////////////
 	listarDepartamentos:listarDepartamentos,
-	listarDocumentos:listarDocumentos
+	listarDocumentos:listarDocumentos,
+	
+	//LOGIN
+	validarLogin:validarLogin
 }

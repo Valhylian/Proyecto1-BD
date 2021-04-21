@@ -7,6 +7,20 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+
+--VALIDAR LOGIN
+CREATE PROCEDURE [dbo].[validarLogin]
+	@InUser varchar(40), @InPassword varchar(40)
+AS
+BEGIN
+	SET NOCOUNT ON;
+    SELECT * FROM [dbo].[AppUser]
+	WHERE [Username] = @InUser AND [Password] = @InPassword;
+	SET NOCOUNT OFF;
+END
+GO
+
+
 --LISTAR TIPOS DOCUMENTOS (ORDEN ALFABETICO)
 CREATE PROCEDURE [dbo].[ListaDocumentos]
 AS
@@ -14,7 +28,6 @@ BEGIN
 
 	SET NOCOUNT ON;
     SELECT * FROM [dbo].[TipoDocIdentidad] ORDER BY [Nombre]; 
-
 	SET NOCOUNT OFF;
 END
 GO
@@ -26,11 +39,9 @@ BEGIN
 
 	SET NOCOUNT ON;
     SELECT * FROM [dbo].[Departamento] ORDER BY [Nombre]; 
-
 	SET NOCOUNT OFF;
 END
 GO
-
 
 
 

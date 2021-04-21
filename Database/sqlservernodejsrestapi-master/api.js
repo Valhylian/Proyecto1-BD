@@ -192,6 +192,15 @@ router.route('/contEmpleados/:id').get((request,response)=>{
     })
 
 })
+
+//LOGIN
+router.route('/login/:user/:pass').get((request,response)=>{
+
+    dboperations.validarLogin(request.params.user, request.params.pass).then(result => {
+       response.status(201).json(result);
+    })
+
+})
 var port = process.env.PORT || 8090;
 app.listen(port);
 console.log('Order API is runnning at ' + port);

@@ -200,8 +200,25 @@ var addPuesto = function(){
 }
 
 var login = function(){
-    $("#login_div").hide();
-    $("#body_div").show();
+	
+	var user =$("#inputUser").val();
+	var pass =$("#inputPassword").val();
+	
+	if (user == "" || pass == ""){
+		window.alert("COMPLETE LOS CAMPOS PARA INGRESAR");
+	}
+	else{
+		$.get( "http://192.168.88.15:8090/api/login/"+user+"/"+pass, function( data ) {
+		if (data[0].length==0){
+			window.alert("Usuario o contrasena incorrecta");
+		}
+        else{
+			$("#login_div").hide();
+			$("#body_div").show();
+        }
+    });
+	}
+
 }
 
 
@@ -737,11 +754,6 @@ var generateTableEmpleadosFiltro = function(){
                 var tr = $("<tr></tr>").attr('id','tablaEmpleado'+element.ID);
                
                 tr.append(nombre).
-                    /*
-                    append(quantity).
-                    append(message).
-                    append(city).*/
-					
 					append(documento).
 					append(valorDoc).
 					append(fecha).
@@ -756,12 +768,20 @@ var generateTableEmpleadosFiltro = function(){
     });
     $("#tableEmpleados").append(table);
 }
+
+
+
+
+
+
+
 //generateTable();
 $("#btn_buscar_empleado").click(generateTableEmpleadosFiltro);
 $("#btn_listar_empleado").click(generateTableEmplados);
 
 generateTablePuestos();
 generateTableEmplados();
+
 //$("#icon_add").click(enableEdition);
 $("#icon_add_puesto").click(enableEditionPuesto);
 $("#icon_add_empleado").click(enableEditionEmpleado);
